@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>90 Day Coach</title>
+<style>
+:root{--bg:#f5f7fa;--card:#fff;--ink:#172033;--muted:#687386;--teal:#00a9a3;--orange:#f37029;--line:#e5e7eb;--good:#15803d;--bad:#b91c1c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+.app{max-width:720px;margin:auto;padding:14px 14px 90px}.top{background:#0f172a;color:#fff;border-radius:22px;padding:20px;margin-bottom:12px}.top h1{margin:0 0 5px;font-size:25px}.top p{margin:0;color:#cbd5e1;font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;margin:10px 0;box-shadow:0 2px 8px #00000008}.metric{padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line)}.metric b{display:block;font-size:21px}.metric span{color:var(--muted);font-size:12px}.tabs{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;z-index:5}.tabs button{border:0;background:none;padding:12px 8px;font-size:11px;color:var(--muted);flex:1;max-width:120px}.tabs button.active{color:var(--teal);font-weight:800}.tab{display:none}.tab.active{display:block}h2{font-size:18px;margin:6px 0 12px}h3{font-size:15px;margin:14px 0 8px}.row{display:grid;grid-template-columns:1fr 1fr;gap:9px}.field{margin-bottom:10px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:15px}textarea{min-height:80px;resize:vertical}.btn{width:100%;border:0;border-radius:13px;padding:12px;font-weight:800;font-size:14px;background:var(--teal);color:#fff;margin-top:5px}.btn.secondary{background:#eef2f4;color:var(--ink)}.btn.orange{background:var(--orange)}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#e8f7f6;color:#087f7b;font-size:11px;font-weight:700}.bar{height:10px;background:#e9eef2;border-radius:20px;overflow:hidden}.bar i{display:block;height:100%;background:var(--teal);width:0}.exercise{border:1px solid var(--line);border-radius:14px;padding:12px;margin:8px 0}.exercise strong{display:block;margin-bottom:7px}.mini{font-size:12px;color:var(--muted)}.log{padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}.success{color:var(--good);font-weight:700}.danger{color:var(--bad);font-weight:700}.footer-note{font-size:11px;color:var(--muted);line-height:1.6}.hide{display:none!important}
+
+.mealgroup{margin:10px 0}.mealgroup h3{margin:10px 0 7px}.quickgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.quick{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px;text-align:right;font-size:12px}.quick b{display:block;font-size:13px}.quick small{color:var(--muted)}.selected{background:#e8f7f6!important;border-color:var(--teal)!important}.remove{border:0;background:none;color:var(--bad);float:left;font-size:16px}
+
+.timelineItem{border-right:3px solid var(--teal);padding:9px 12px;margin:7px 0;background:#f8fafc;border-radius:10px}.statline{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <h1>90 Day Coach 💪</h1>
+    <p>Day <span id="day">1</span> · البداية 1 أكتوبر 2026 · الهدف: Fat Loss + Muscle</p>
+  </div>
+
+  <section id="dashboard" class="tab active">
+    <div class="grid">
+      <div class="metric"><span>الوزن الحالي</span><b id="dashWeight">98 kg</b></div>
+      <div class="metric"><span>متوسط السعرات</span><b id="dashCal">—</b></div>
+      <div class="metric"><span>متوسط البروتين</span><b id="dashPro">—</b></div>
+      <div class="metric"><span>التمرينات</span><b id="dashWorkouts">0 / 4</b></div>
+    </div>
+    <div class="card">
+      <h2>تقدم الـ90 يوم</h2>
+      <div class="bar"><i id="progress"></i></div>
+      <p class="mini" id="progressText">0% من البرنامج</p>
+    </div>
+    <div class="card">
+      <h2>أهداف اليوم</h2>
+      <div class="grid">
+        <div class="metric"><span>Calories</span><b>1800</b></div>
+        <div class="metric"><span>Protein</span><b>150–170g</b></div>
+        <div class="metric"><span>Steps</span><b>6000+</b></div>
+        <div class="metric"><span>Water</span><b>2.5–3L</b></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>آخر Check-ins</h2><div id="recent"></div>
+    </div><div class="card">
+      <h2>🤖 Coach Status</h2>
+      <div id="coachStatus" class="footer-note">سجل يومك وسيتم تحليل الالتزام والتقدم.</div>
+    </div>
+  </section>
+
+  <section id="checkin" class="tab">
+    <div class="card">
+      <h2>🍽️ أكلي النهارده</h2>
+      <p class="mini">اضغط على الوجبة أو المشروب لإضافته فورًا. السعرات والبروتين يتحسبوا تلقائيًا.</p>
+      <div id="mealButtons"></div>
+      <h3>إجمالي اليوم</h3>
+      <div class="grid">
+        <div class="metric"><span>Calories</span><b id="mealCal">0</b></div>
+        <div class="metric"><span>Protein</span><b id="mealPro">0g</b></div>
+      </div>
+      <div id="mealLog"></div>
+      <button class="btn secondary" onclick="clearMeals()">مسح أكل اليوم</button>
+    </div>
+
+    <div class="card">
+      <h2>💧 مشروبات سريعة</h2>
+      <div class="grid" id="drinkButtons"></div>
+    </div>
+
+    <div class="card">
+      <h2>Daily Check-in</h2>
+      <div class="row">
+        <div class="field"><label>الوزن صباحًا (kg)</label><input id="weight" type="number" step=".1"></div>
+        <div class="field"><label>المياه (L)</label><input id="water" type="number" step=".1"></div>
+        <div class="field"><label>الخطوات</label><input id="steps" type="number"></div>
+        <div class="field"><label>النوم (ساعات)</label><input id="sleep" type="number" step=".1"></div>
+        <div class="field"><label>الجوع 1–10</label><input id="hunger" type="number" min="1" max="10"></div>
+        <div class="field"><label>الطاقة 1–10</label><input id="energy" type="number" min="1" max="10"></div>
+        <div class="field"><label>ألم الركبة 0–10</label><input id="knee" type="number" min="0" max="10"></div>
+      </div>
+      <div class="field"><label>ملاحظات</label><textarea id="notes" placeholder="أي حاجة مهمة..."></textarea></div>
+      <button class="btn" onclick="saveCheckin()">حفظ Check-in</button>
+      <p id="saveMsg" class="success"></p>
+    </div>
+  </section>
+
+  <section id="workout" class="tab">
+    <div class="card">
+      <h2>🏋️ تمرين اليوم</h2>
+      <div class="field"><label>اختار التمرينة</label><select id="workoutDay"><option>Upper A</option><option>Lower A</option><option>Upper B</option><option>Lower B</option></select></div>
+      <div id="coachTip" class="pill">ابدأ بوزن يسمح لك بـ RIR 2 تقريبًا</div>
+      <div id="exercises"></div>
+      <button class="btn" onclick="saveWorkout()">حفظ التمرين بالكامل</button>
+      <p id="workoutMsg" class="success"></p>
+    </div>
+    <div class="card">
+      <h2>📈 اقتراح الكوتش</h2>
+      <div id="progressionAdvice" class="footer-note">بعد حفظ أول تمرين، هنعرف الوزن والتكرارات للمرة القادمة.</div>
+    </div>
+  </section>
+
+  <section id="history" class="tab">
+    <div class="card">
+      <h2>History</h2>
+      <div id="historyList"></div>
+      <button class="btn secondary" onclick="exportData()">تصدير بياناتي</button>
+      <button class="btn secondary" onclick="document.getElementById('importFile').click()">استيراد بيانات</button>
+      <input id="importFile" class="hide" type="file" accept=".json" onchange="importData(event)">
+      <p class="footer-note">التصدير مهم لأنه هو الطريقة التي تقدر بها تنقل سجلّك لجهاز آخر أو تعيده لي في المحادثة عند الحاجة.</p>
+    </div>
+  </section>
+
+  <section id="supplements" class="tab">
+  <div class="card">
+    <h2>💊 Supplement Plan</h2>
+    <p class="mini">الخطة دي للـ90 يوم. مش لازم تشتري كل حاجة؛ الأولوية للخيارات ذات الفائدة الواضحة، والفيتامينات تُستخدم عند الحاجة.</p>
+  </div>
+
+  <div class="card">
+    <h2>1️⃣ Creatine Monohydrate</h2>
+    <span class="pill">الأولوية: عالية</span>
+    <h3>الجرعة</h3><p>3–5g كل يوم.</p>
+    <h3>الوقت</h3><p><b>أي وقت يناسبك.</b> اختار بعد الفطار أو مع وجبة ثابتة عشان تفتكرها. في أيام الجيم مش لازم تكون قبل التمرين.</p>
+    <h3>ليه؟</h3><p>مفيد للقوة والأداء والتكيف مع تمارين المقاومة. لا تحتاج Loading؛ الجرعة اليومية المنتظمة كافية على المدى الطويل.</p>
+    <button class="btn" onclick="toggleSupp('creatine')">✓ سجلت الجرعة النهارده</button>
+    <p id="supp-creatine" class="success"></p>
+  </div>
+
+  <div class="card">
+    <h2>2️⃣ Vitamin D3</h2>
+    <span class="pill">الأولوية: حسب التحليل/الاحتياج</span>
+    <h3>الوقت</h3><p>لو الطبيب/التحليل أوصاك به: خده مع وجبة تحتوي على دهون، مثل الغداء أو العشاء.</p>
+    <h3>مهم</h3><p>مش هحط لك جرعة علاجية عشوائية. الأفضل معرفة 25‑OH Vitamin D أو اتباع جرعة موصى بها من طبيب، لأن زيادة فيتامين D ممكن تكون ضارة.</p>
+    <button class="btn" onclick="toggleSupp('vitd')">✓ سجلت جرعة اليوم</button>
+    <p id="supp-vitd" class="success"></p>
+  </div>
+
+  <div class="card">
+    <h2>3️⃣ Omega‑3 (EPA + DHA)</h2>
+    <span class="pill">الأولوية: حسب أكلك</span>
+    <h3>الوقت</h3><p>مع وجبة رئيسية، ويفضل وجبة فيها دهون؛ التوقيت الدقيق مش مهم.</p>
+    <h3>هل تحتاجه؟</h3><p>لو بتاكل سمك دهني بانتظام، ممكن ما تحتاجش مكمل. لو استهلاكك للسمك قليل، ممكن يكون خيارًا عمليًا.</p>
+    <p class="mini">لو بتستخدم مميعات دم أو عندك حالة طبية/دواء منتظم، راجع الطبيب أو الصيدلي قبل مكملات أوميغا‑3.</p>
+    <button class="btn" onclick="toggleSupp('omega3')">✓ سجلت جرعة اليوم</button>
+    <p id="supp-omega3" class="success"></p>
+  </div>
+
+  <div class="card">
+    <h2>⏰ جدول بسيط</h2>
+    <div class="log"><b>بعد الفطار:</b> Creatine 3–5g</div>
+    <div class="log"><b>مع الغداء/العشاء:</b> Vitamin D3 فقط إذا كان موصى به + Omega‑3 إذا احتجته</div>
+    <div class="log"><b>أيام الجيم:</b> لا تحتاج مكملًا مخصوصًا قبل التمرين في البداية.</div>
+  </div>
+</section>
+<section id="timeline" class="tab">
+  <div class="card">
+    <h2>🗓️ My Complete History</h2>
+    <p class="mini">كل تسجيلاتك تتخزن بتاريخها. استخدم هذه الصفحة لمراجعة الرحلة من Day 1 إلى اليوم.</p>
+    <div id="timelineStats"></div>
+  </div>
+  <div class="card">
+    <h2>📚 السجل الكامل</h2>
+    <div id="timelineList"></div>
+  </div>
+  <div class="card">
+    <h2>☁️ Backup</h2>
+    <p class="footer-note">الأداة تحفظ البيانات على الجهاز. استخدم Export Data بشكل دوري للاحتفاظ بنسخة كاملة من تاريخك.</p>
+    <button class="btn" onclick="exportData()">تصدير كل تاريخي</button>
+  </div>
+</section>
+<section id="coach" class="tab">
+    <div class="card">
+      <h2>Coach Rules</h2>
+      <p class="footer-note">البداية: 1800 kcal تقريبًا · البروتين 150–170g · 4 تمارين/أسبوع · RIR 2 تقريبًا في البداية.</p>
+      <h3>Progressive Overload</h3>
+      <p class="footer-note">لو وصلت لأعلى الـrep range في كل المجموعات مع فورم سليم وRIR مناسب → زوّد أصغر وزن متاح. لو لم تصل → احتفظ بالوزن وحاول تزود reps.</p>
+      <h3>التعديل الأسبوعي</h3>
+      <p class="footer-note">لن نغيّر السعرات بسبب يوم واحد. ننظر لمتوسط أسبوعين. لو النزول بطيء مع التزام جيد نخفض 100–150 kcal؛ لو النزول سريع جدًا أو الأداء يتدهور نرفع 100–150 kcal.</p>
+      <h3>ACL</h3>
+      <p class="footer-note">لو ظهر ألم واضح، تورم، عدم ثبات أو giving-way: أوقف التمرين المسبب واطلب تقييمًا طبيًا/فيزيو قبل التصعيد.</p>
+    </div>
+  </section>
+</div>
+
+<nav class="tabs">
+<button class="active" onclick="tab('dashboard',this)">Dashboard</button>
+<button onclick="tab('checkin',this)">Check-in</button>
+<button onclick="tab('workout',this)">Workout</button>
+<button onclick="tab('history',this)">History</button>
+<button onclick="tab('supplements',this)">Supplements</button>
+<button onclick="tab('timeline',this)">Timeline</button>
+<button onclick="tab('coach',this)">Coach</button>
+</nav>
+
+<script>
+const KEY='coach90_v2';
+let data=JSON.parse(localStorage.getItem(KEY)||'{"checkins":[],"workouts":[],"meals":{},"supplements":{}}');
+if(!data.supplements)data.supplements={};
+if(!data.meals)data.meals={};
+const start=new Date('2026-10-01T00:00:00');
+const mealDB={
+"فطار":[
+["فول + ½ رغيف","350","17"],["2 بيضة + ½ رغيف","300","17"],["3 بيض + خضار","260","19"],
+["زبادي يوناني + موزة","250","20"],["شوفان + لبن + موز","400","18"],["ساندوتش تونة","350","30"]
+],
+"غدا":[
+["200g صدور فراخ + 200g رز","600","65"],["200g لحمة + 200g رز","700","55"],["200g فراخ + بطاطس","550","62"],
+["كفتة + رز","650","45"],["تونة + عيش + سلطة","500","40"],["مكرونة + فراخ","650","55"]
+],
+"سناك":[
+["تفاحة","95","0"],["موزة","105","1"],["زبادي لايت","100","10"],["Whey scoop","120","24"],["حفنة مكسرات 20g","120","4"],["شيبسي صغير","160","2"]
+],
+"عشاء":[
+["2 بيضة + جبنة قريش","300","30"],["تونة + سلطة","280","35"],["فراخ + سلطة","350","55"],["فول + ½ رغيف","350","17"]
+]};
+const drinks=[
+["لاتيه + 2 سكر",180,7],["لاتيه بدون سكر",120,7],["قهوة سادة",5,0],["شاي + 2 سكر",35,0],
+["Diet Pepsi",0,0],["لبن 250ml",120,8],["Whey + ماء",120,24]
+];
+function todayKey(){return new Date().toISOString().slice(0,10)}
+function dayNum(){return Math.max(1,Math.min(90,Math.floor((new Date()-start)/86400000)+1))}
+function save(){localStorage.setItem(KEY,JSON.stringify(data));render()}
+function tab(id,btn){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));btn.classList.add('active')}
+function todayMeals(){return data.meals[todayKey()]||(data.meals[todayKey()]=[])}
+function addMeal(name,cal,pro){todayMeals().push({name,cal:+cal,pro:+pro});save()}
+function removeMeal(i){todayMeals().splice(i,1);save()}
+function clearMeals(){if(confirm('مسح أكل اليوم؟')){data.meals[todayKey()]=[];save()}}
+function renderMealUI(){
+ let mb=document.getElementById('mealButtons'); mb.innerHTML='';
+ Object.entries(mealDB).forEach(([group,items])=>{
+   mb.insertAdjacentHTML('beforeend',`<div class="mealgroup"><h3>${group}</h3><div class="quickgrid">${items.map(x=>`<button class="quick" onclick="addMeal('${x[0].replace(/'/g,"\\'")}',${x[1]},${x[2]})"><b>${x[0]}</b><small>${x[1]} kcal · ${x[2]}g protein</small></button>`).join('')}</div></div>`)
+ });
+ document.getElementById('drinkButtons').innerHTML=drinks.map(x=>`<button class="quick" onclick="addMeal('${x[0]}',${x[1]},${x[2]})"><b>${x[0]}</b><small>${x[1]} kcal · ${x[2]}g protein</small></button>`).join('');
+ let m=todayMeals(),cal=m.reduce((s,x)=>s+x.cal,0),pro=m.reduce((s,x)=>s+x.pro,0);
+ mealCal.textContent=cal;mealPro.textContent=pro+'g';
+ mealLog.innerHTML=m.map((x,i)=>`<div class="log"><button class="remove" onclick="removeMeal(${i})">×</button><b>${x.name}</b> · ${x.cal} kcal · ${x.pro}g protein</div>`).join('')||'<p class="mini">لسه مفيش أكل متسجل.</p>';
+}
+function saveCheckin(){
+ let m=todayMeals(),cal=m.reduce((s,x)=>s+x.cal,0),pro=m.reduce((s,x)=>s+x.pro,0);
+ let d={date:new Date().toISOString(),weight:+weight.value||null,calories:cal,protein:pro,water:+water.value||null,steps:+steps.value||null,sleep:+sleep.value||null,hunger:+hunger.value||null,energy:+energy.value||null,knee:+knee.value||0,notes:notes.value};
+ data.checkins=data.checkins.filter(x=>x.date.slice(0,10)!==todayKey());data.checkins.push(d);save();saveMsg.textContent='تم حفظ Check-in اليومي ✅';
+}
+const exercises={
+"Upper A":["Chest Press","Lat Pulldown","Seated Cable Row","DB Shoulder Press","Lateral Raise","Triceps Pressdown","DB Curl"],
+"Lower A":["Leg Press","Leg Curl","Leg Extension","Hip Thrust","Calf Raise","Dead Bug"],
+"Upper B":["Incline DB Press","Chest-Supported Row","Neutral-Grip Pulldown","Cable Fly","Rear Delt Fly","Overhead Triceps Extension","Hammer Curl"],
+"Lower B":["Goblet Squat to Box*","Romanian Deadlift","Leg Curl","Hip Abduction","Calf Raise","Pallof Press"]};
+function previousExercise(name){
+ for(let i=data.workouts.length-1;i>=0;i--){let e=data.workouts[i].exercises.find(x=>x.exercise===name);if(e)return e}return null
+}
+function renderExercises(){
+ exercisesEl.innerHTML='';
+ let list=exercises[workoutDay.value];
+ list.forEach((e,i)=>{
+   let prev=previousExercise(e), hint=prev?`آخر مرة: ${prev.load||'—'}kg · ${prev.sets||'—'}`:'أول مرة — ابدأ محافظًا';
+   exercisesEl.insertAdjacentHTML('beforeend',`<div class="exercise"><strong>${e}</strong><div class="mini">${hint}</div><div class="row"><input id="sets${i}" placeholder="Reps: 12/11/10"><input id="load${i}" placeholder="الوزن kg"></div></div>`)
+ });
+ let last=data.workouts.filter(x=>x.day===workoutDay.value).at(-1);
+ progressionAdvice.textContent=last?'في المرة القادمة: لو وصلت للحد الأعلى من الـreps بكل المجموعات مع فورم سليم وRIR≈2، زوّد أصغر وزن متاح.':'بعد أول تسجيل هنبدأ بناء سجل الـprogression.';
+}
+function saveWorkout(){
+ let day=workoutDay.value,arr=[];exercises[day].forEach((e,i)=>arr.push({exercise:e,sets:document.getElementById('sets'+i).value,load:document.getElementById('load'+i).value}));
+ data.workouts.push({date:new Date().toISOString(),day,exercises:arr});save();workoutMsg.textContent='تم حفظ التمرين بالكامل ✅';renderExercises();
+}
+function exportData(){data.exportedAt=new Date().toISOString();data.appVersion='coach90_v3';let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='coach90-data.json';a.click()}
+function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{data=JSON.parse(r.result);save();alert('تم استيراد البيانات ✅')}catch{alert('الملف غير صالح')}};r.readAsText(f)}
+function toggleSupp(name){
+ let k=todayKey();
+ if(!data.supplements[k])data.supplements[k]={};
+ data.supplements[k][name]=!data.supplements[k][name];
+ save();
+}
+function renderSupp(){
+ ['creatine','vitd','omega3'].forEach(n=>{
+   let el=document.getElementById('supp-'+n);
+   if(el)el.textContent=(data.supplements[todayKey()]||{})[n]?'تم تسجيله اليوم ✅':'';
+ });
+}
+
+function allDates(){
+ let s=new Set([...data.checkins.map(x=>x.date.slice(0,10)),...Object.keys(data.meals),...data.workouts.map(x=>x.date.slice(0,10)),...Object.keys(data.supplements)]);
+ return [...s].sort();
+}
+function coachAnalysis(){
+ let cs=data.checkins.filter(x=>x.calories||x.protein);
+ let last14=cs.slice(-14);
+ let avg=(arr,k)=>{let a=arr.map(x=>+x[k]).filter(Number.isFinite);return a.length?a.reduce((s,v)=>s+v,0)/a.length:null};
+ let ac=avg(last14,'calories'), ap=avg(last14,'protein'), as=avg(last14,'steps'), ak=avg(last14,'knee');
+ let wt=cs.filter(x=>x.weight).map(x=>x.weight), delta=wt.length>1?wt.at(-1)-wt[0]:null;
+ let msgs=[];
+ if(ap!==null && ap<150)msgs.push('ارفع البروتين إلى 150–170g يوميًا.');
+ if(ac!==null && ac>1900)msgs.push('متوسط السعرات أعلى من هدف البداية؛ راجع الوجبات والسناكات.');
+ if(as!==null && as<6000)msgs.push('حاول الحفاظ على 6000 خطوة على الأقل.');
+ if(ak!==null && ak>3)msgs.push('الركبة تحتاج انتباهًا: لا تصعّد تمارين الرجل قبل تقييم الأعراض.');
+ if(!msgs.length)msgs.push('البيانات الحالية تبدو مناسبة. استمر ولا تغيّر الخطة بسبب يوم واحد.');
+ return {ac,ap,as,ak,delta,msgs};
+}
+function renderTimeline(){
+ let dates=allDates().reverse();
+ let cs=data.checkins.filter(x=>x.weight), ws=data.workouts, meals=Object.values(data.meals).flat();
+ let startW=cs[0]?.weight??98,endW=cs.at(-1)?.weight??startW;
+ timelineStats.innerHTML=`<div class="statline"><b>البداية</b><span>${startW} kg</span></div>
+ <div class="statline"><b>الحالي</b><span>${endW} kg</span></div>
+ <div class="statline"><b>التغيير</b><span>${(endW-startW).toFixed(1)} kg</span></div>
+ <div class="statline"><b>Check-ins</b><span>${data.checkins.length}</span></div>
+ <div class="statline"><b>Workouts</b><span>${ws.length}</span></div>
+ <div class="statline"><b>Meals logged</b><span>${meals.length}</span></div>`;
+ timelineList.innerHTML=dates.map(d=>{
+   let c=data.checkins.find(x=>x.date.slice(0,10)===d), m=data.meals[d]||[], w=ws.filter(x=>x.date.slice(0,10)===d);
+   let mc=m.reduce((s,x)=>s+x.cal,0),mp=m.reduce((s,x)=>s+x.pro,0);
+   return `<div class="timelineItem"><b>${d}</b><br>
+   ${c?`⚖️ ${c.weight??'—'}kg · 🔥 ${c.calories??mc||'—'} kcal · 🥩 ${c.protein??mp||'—'}g`:''}
+   ${m.length?`<br>🍽️ ${m.length} items · ${mc} kcal`:''}
+   ${w.length?`<br>🏋️ ${w.map(x=>x.day).join(', ')}`:''}</div>`;
+ }).join('')||'<p class="mini">لم يبدأ السجل بعد.</p>';
+}
+function render(){
+ day.textContent=dayNum();let p=Math.round(dayNum()/90*100);progress.style.width=p+'%';progressText.textContent=p+'% من البرنامج';
+ let cs=data.checkins.filter(x=>x.weight);dashWeight.textContent=(cs.at(-1)?.weight??98)+' kg';
+ let last=data.checkins.slice(-7),avg=k=>{let a=last.map(x=>x[k]).filter(x=>x!=null);return a.length?(a.reduce((s,x)=>s+x,0)/a.length).toFixed(0):'—'};
+ dashCal.textContent=avg('calories');dashPro.textContent=avg('protein');dashWorkouts.textContent=(data.workouts.filter(x=>(new Date()-new Date(x.date))<7*86400000).length)+' / 4';
+ recent.innerHTML=data.checkins.slice(-5).reverse().map(x=>`<div class="log"><b>${new Date(x.date).toLocaleDateString('ar-EG')}</b> · ${x.weight||'—'}kg · ${x.calories||'—'} kcal · ${x.protein||'—'}g</div>`).join('')||'<p class="mini">لسه مفيش Check-ins.</p>';
+ historyList.innerHTML=data.checkins.slice().reverse().map(x=>`<div class="log">${new Date(x.date).toLocaleDateString('ar-EG')} — ${x.weight||'—'}kg — ${x.calories||'—'} kcal — ${x.protein||'—'}g — knee ${x.knee}/10</div>`).join('')||'<p class="mini">لا توجد بيانات.</p>';
+ renderMealUI();renderSupp();renderTimeline();
+ let a=coachAnalysis();
+ coachStatus.innerHTML=`<b>آخر تحليل:</b> ${a.msgs[0]}<br><span class="mini">متوسط آخر ${Math.min(14,data.checkins.length)} يوم: ${a.ac?Math.round(a.ac):'—'} kcal · ${a.ap?Math.round(a.ap):'—'}g protein · ${a.as?Math.round(a.as):'—'} steps</span>`;
+}
+const exercisesEl=document.getElementById('exercises');
+workoutDay.onchange=()=>{renderExercises()};renderExercises();render();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+}
+</script>
+</body>
+</html>
