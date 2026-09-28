@@ -4,9 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0f172a">
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icon-192.png">
 <title>90 Day Coach</title>
+<link rel="manifest" href="./manifest.webmanifest">
 <style>
 :root{--bg:#f5f7fa;--card:#fff;--ink:#172033;--muted:#687386;--teal:#00a9a3;--orange:#f37029;--line:#e5e7eb;--good:#15803d;--bad:#b91c1c}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
@@ -314,7 +313,7 @@ function renderTimeline(){
    let c=data.checkins.find(x=>x.date.slice(0,10)===d), m=data.meals[d]||[], w=ws.filter(x=>x.date.slice(0,10)===d);
    let mc=m.reduce((s,x)=>s+x.cal,0),mp=m.reduce((s,x)=>s+x.pro,0);
    return `<div class="timelineItem"><b>${d}</b><br>
-   ${c?`⚖️ ${c.weight??'—'}kg · 🔥 ${c.calories??mc||'—'} kcal · 🥩 ${c.protein??mp||'—'}g`:''}
+   ${c?`⚖️ ${c.weight??'—'}kg · 🔥 ${(c.calories ?? mc) ?? '—'} kcal · 🥩 ${(c.protein ?? mp) ?? '—'}g`:''}
    ${m.length?`<br>🍽️ ${m.length} items · ${mc} kcal`:''}
    ${w.length?`<br>🏋️ ${w.map(x=>x.day).join(', ')}`:''}</div>`;
  }).join('')||'<p class="mini">لم يبدأ السجل بعد.</p>';
@@ -330,13 +329,40 @@ function render(){
  let a=coachAnalysis();
  coachStatus.innerHTML=`<b>آخر تحليل:</b> ${a.msgs[0]}<br><span class="mini">متوسط آخر ${Math.min(14,data.checkins.length)} يوم: ${a.ac?Math.round(a.ac):'—'} kcal · ${a.ap?Math.round(a.ap):'—'}g protein · ${a.as?Math.round(a.as):'—'} steps</span>`;
 }
+const day=document.getElementById('day');
+const progress=document.getElementById('progress');
+const progressText=document.getElementById('progressText');
+const dashWeight=document.getElementById('dashWeight');
+const dashCal=document.getElementById('dashCal');
+const dashPro=document.getElementById('dashPro');
+const dashWorkouts=document.getElementById('dashWorkouts');
+const recent=document.getElementById('recent');
+const historyList=document.getElementById('historyList');
+const mealButtons=document.getElementById('mealButtons');
+const drinkButtons=document.getElementById('drinkButtons');
+const mealCal=document.getElementById('mealCal');
+const mealPro=document.getElementById('mealPro');
+const mealLog=document.getElementById('mealLog');
+const weight=document.getElementById('weight');
+const water=document.getElementById('water');
+const steps=document.getElementById('steps');
+const sleep=document.getElementById('sleep');
+const hunger=document.getElementById('hunger');
+const energy=document.getElementById('energy');
+const knee=document.getElementById('knee');
+const notes=document.getElementById('notes');
+const saveMsg=document.getElementById('saveMsg');
+const workoutDay=document.getElementById('workoutDay');
 const exercisesEl=document.getElementById('exercises');
-workoutDay.onchange=()=>{renderExercises()};renderExercises();render();
+const progressionAdvice=document.getElementById('progressionAdvice');
+const workoutMsg=document.getElementById('workoutMsg');
+const coachStatus=document.getElementById('coachStatus');
+const timelineStats=document.getElementById('timelineStats');
+const timelineList=document.getElementById('timelineList');
+workoutDay.addEventListener('change',renderExercises);
+renderExercises();
+render();
 </script>
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(()=>{}));
-}
-</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
 </body>
 </html>
