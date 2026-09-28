@@ -9,9 +9,9 @@
 <style>
 :root{--bg:#f5f7fa;--card:#fff;--ink:#172033;--muted:#687386;--teal:#00a9a3;--orange:#f37029;--line:#e5e7eb;--good:#15803d;--bad:#b91c1c}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
-.app{max-width:720px;margin:auto;padding:14px 14px 90px}.top{background:#0f172a;color:#fff;border-radius:22px;padding:20px;margin-bottom:12px}.top h1{margin:0 0 5px;font-size:25px}.top p{margin:0;color:#cbd5e1;font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;margin:10px 0;box-shadow:0 2px 8px #00000008}.metric{padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line)}.metric b{display:block;font-size:21px}.metric span{color:var(--muted);font-size:12px}.tabs{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;z-index:5}.tabs button{border:0;background:none;padding:12px 8px;font-size:11px;color:var(--muted);flex:1;max-width:120px}.tabs button.active{color:var(--teal);font-weight:800}.tab{display:none}.tab.active{display:block}h2{font-size:18px;margin:6px 0 12px}h3{font-size:15px;margin:14px 0 8px}.row{display:grid;grid-template-columns:1fr 1fr;gap:9px}.field{margin-bottom:10px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:15px}textarea{min-height:80px;resize:vertical}.btn{width:100%;border:0;border-radius:13px;padding:12px;font-weight:800;font-size:14px;background:var(--teal);color:#fff;margin-top:5px}.btn.secondary{background:#eef2f4;color:var(--ink)}.btn.orange{background:var(--orange)}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#e8f7f6;color:#087f7b;font-size:11px;font-weight:700}.bar{height:10px;background:#e9eef2;border-radius:20px;overflow:hidden}.bar i{display:block;height:100%;background:var(--teal);width:0}.exercise{border:1px solid var(--line);border-radius:14px;padding:12px;margin:8px 0}.exercise strong{display:block;margin-bottom:7px}.mini{font-size:12px;color:var(--muted)}.log{padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}.success{color:var(--good);font-weight:700}.danger{color:var(--bad);font-weight:700}.footer-note{font-size:11px;color:var(--muted);line-height:1.6}.hide{display:none!important}
+.app{max-width:720px;margin:auto;padding:14px 14px 90px}.top{background:#0f172a;color:#fff;border-radius:22px;padding:20px;margin-bottom:12px}.top h1{margin:0 0 5px;font-size:25px}.top p{margin:0;color:#cbd5e1;font-size:13px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;margin:10px 0;box-shadow:0 2px 8px #00000008}.metric{padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line)}.metric b{display:block;font-size:21px}.metric span{color:var(--muted);font-size:12px}.tabs{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;z-index:5}.tabs button{position:relative;z-index:10;cursor:pointer;touch-action:manipulation;border:0;background:none;padding:12px 8px;font-size:11px;color:var(--muted);flex:1;max-width:120px}.tabs button.active{color:var(--teal);font-weight:800}.tab{display:none}.tab.active{display:block}h2{font-size:18px;margin:6px 0 12px}h3{font-size:15px;margin:14px 0 8px}.row{display:grid;grid-template-columns:1fr 1fr;gap:9px}.field{margin-bottom:10px}.field label{display:block;font-size:12px;color:var(--muted);margin-bottom:5px}input,select,textarea{width:100%;padding:11px;border:1px solid var(--line);border-radius:12px;background:#fff;font-size:15px}textarea{min-height:80px;resize:vertical}.btn{position:relative;z-index:10;cursor:pointer;touch-action:manipulation;width:100%;border:0;border-radius:13px;padding:12px;font-weight:800;font-size:14px;background:var(--teal);color:#fff;margin-top:5px}.btn.secondary{background:#eef2f4;color:var(--ink)}.btn.orange{background:var(--orange)}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#e8f7f6;color:#087f7b;font-size:11px;font-weight:700}.bar{height:10px;background:#e9eef2;border-radius:20px;overflow:hidden}.bar i{display:block;height:100%;background:var(--teal);width:0}.exercise{border:1px solid var(--line);border-radius:14px;padding:12px;margin:8px 0}.exercise strong{display:block;margin-bottom:7px}.mini{font-size:12px;color:var(--muted)}.log{padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}.success{color:var(--good);font-weight:700}.danger{color:var(--bad);font-weight:700}.footer-note{font-size:11px;color:var(--muted);line-height:1.6}.hide{display:none!important}
 
-.mealgroup{margin:10px 0}.mealgroup h3{margin:10px 0 7px}.quickgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.quick{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px;text-align:right;font-size:12px}.quick b{display:block;font-size:13px}.quick small{color:var(--muted)}.selected{background:#e8f7f6!important;border-color:var(--teal)!important}.remove{border:0;background:none;color:var(--bad);float:left;font-size:16px}
+.mealgroup{margin:10px 0}.mealgroup h3{margin:10px 0 7px}.quickgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px}.quick{position:relative;z-index:10;cursor:pointer;touch-action:manipulation;border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px;text-align:right;font-size:12px}.quick b{display:block;font-size:13px}.quick small{color:var(--muted)}.selected{background:#e8f7f6!important;border-color:var(--teal)!important}.remove{border:0;background:none;color:var(--bad);float:left;font-size:16px}
 
 .timelineItem{border-right:3px solid var(--teal);padding:9px 12px;margin:7px 0;background:#f8fafc;border-radius:10px}.statline{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--line)}
 </style>
@@ -63,7 +63,7 @@
         <div class="metric"><span>Protein</span><b id="mealPro">0g</b></div>
       </div>
       <div id="mealLog"></div>
-      <button class="btn secondary" onclick="clearMeals()">مسح أكل اليوم</button>
+      <button class="btn secondary" data-action="clearMeals">مسح أكل اليوم</button>
     </div>
 
     <div class="card">
@@ -83,7 +83,7 @@
         <div class="field"><label>ألم الركبة 0–10</label><input id="knee" type="number" min="0" max="10"></div>
       </div>
       <div class="field"><label>ملاحظات</label><textarea id="notes" placeholder="أي حاجة مهمة..."></textarea></div>
-      <button class="btn" onclick="saveCheckin()">حفظ Check-in</button>
+      <button class="btn" data-action="saveCheckin">حفظ Check-in</button>
       <p id="saveMsg" class="success"></p>
     </div>
   </section>
@@ -94,7 +94,7 @@
       <div class="field"><label>اختار التمرينة</label><select id="workoutDay"><option>Upper A</option><option>Lower A</option><option>Upper B</option><option>Lower B</option></select></div>
       <div id="coachTip" class="pill">ابدأ بوزن يسمح لك بـ RIR 2 تقريبًا</div>
       <div id="exercises"></div>
-      <button class="btn" onclick="saveWorkout()">حفظ التمرين بالكامل</button>
+      <button class="btn" data-action="saveWorkout">حفظ التمرين بالكامل</button>
       <p id="workoutMsg" class="success"></p>
     </div>
     <div class="card">
@@ -107,8 +107,8 @@
     <div class="card">
       <h2>History</h2>
       <div id="historyList"></div>
-      <button class="btn secondary" onclick="exportData()">تصدير بياناتي</button>
-      <button class="btn secondary" onclick="document.getElementById('importFile').click()">استيراد بيانات</button>
+      <button class="btn secondary" data-action="exportData">تصدير بياناتي</button>
+      <button class="btn secondary" data-action="openImport">استيراد بيانات</button>
       <input id="importFile" class="hide" type="file" accept=".json" onchange="importData(event)">
       <p class="footer-note">التصدير مهم لأنه هو الطريقة التي تقدر بها تنقل سجلّك لجهاز آخر أو تعيده لي في المحادثة عند الحاجة.</p>
     </div>
@@ -126,7 +126,7 @@
     <h3>الجرعة</h3><p>3–5g كل يوم.</p>
     <h3>الوقت</h3><p><b>أي وقت يناسبك.</b> اختار بعد الفطار أو مع وجبة ثابتة عشان تفتكرها. في أيام الجيم مش لازم تكون قبل التمرين.</p>
     <h3>ليه؟</h3><p>مفيد للقوة والأداء والتكيف مع تمارين المقاومة. لا تحتاج Loading؛ الجرعة اليومية المنتظمة كافية على المدى الطويل.</p>
-    <button class="btn" onclick="toggleSupp('creatine')">✓ سجلت الجرعة النهارده</button>
+    <button class="btn" data-action="supp" data-name="creatine">✓ سجلت الجرعة النهارده</button>
     <p id="supp-creatine" class="success"></p>
   </div>
 
@@ -135,7 +135,7 @@
     <span class="pill">الأولوية: حسب التحليل/الاحتياج</span>
     <h3>الوقت</h3><p>لو الطبيب/التحليل أوصاك به: خده مع وجبة تحتوي على دهون، مثل الغداء أو العشاء.</p>
     <h3>مهم</h3><p>مش هحط لك جرعة علاجية عشوائية. الأفضل معرفة 25‑OH Vitamin D أو اتباع جرعة موصى بها من طبيب، لأن زيادة فيتامين D ممكن تكون ضارة.</p>
-    <button class="btn" onclick="toggleSupp('vitd')">✓ سجلت جرعة اليوم</button>
+    <button class="btn" data-action="supp" data-name="vitd">✓ سجلت جرعة اليوم</button>
     <p id="supp-vitd" class="success"></p>
   </div>
 
@@ -145,7 +145,7 @@
     <h3>الوقت</h3><p>مع وجبة رئيسية، ويفضل وجبة فيها دهون؛ التوقيت الدقيق مش مهم.</p>
     <h3>هل تحتاجه؟</h3><p>لو بتاكل سمك دهني بانتظام، ممكن ما تحتاجش مكمل. لو استهلاكك للسمك قليل، ممكن يكون خيارًا عمليًا.</p>
     <p class="mini">لو بتستخدم مميعات دم أو عندك حالة طبية/دواء منتظم، راجع الطبيب أو الصيدلي قبل مكملات أوميغا‑3.</p>
-    <button class="btn" onclick="toggleSupp('omega3')">✓ سجلت جرعة اليوم</button>
+    <button class="btn" data-action="supp" data-name="omega3">✓ سجلت جرعة اليوم</button>
     <p id="supp-omega3" class="success"></p>
   </div>
 
@@ -169,7 +169,7 @@
   <div class="card">
     <h2>☁️ Backup</h2>
     <p class="footer-note">الأداة تحفظ البيانات على الجهاز. استخدم Export Data بشكل دوري للاحتفاظ بنسخة كاملة من تاريخك.</p>
-    <button class="btn" onclick="exportData()">تصدير كل تاريخي</button>
+    <button class="btn" data-action="exportData">تصدير كل تاريخي</button>
   </div>
 </section>
 <section id="coach" class="tab">
@@ -187,18 +187,19 @@
 </div>
 
 <nav class="tabs">
-<button class="active" onclick="tab('dashboard',this)">Dashboard</button>
-<button onclick="tab('checkin',this)">Check-in</button>
-<button onclick="tab('workout',this)">Workout</button>
-<button onclick="tab('history',this)">History</button>
-<button onclick="tab('supplements',this)">Supplements</button>
-<button onclick="tab('timeline',this)">Timeline</button>
-<button onclick="tab('coach',this)">Coach</button>
+<button class="active" data-action="tab" data-tab="dashboard">Dashboard</button>
+<button data-action="tab" data-tab="checkin">Check-in</button>
+<button data-action="tab" data-tab="workout">Workout</button>
+<button data-action="tab" data-tab="history">History</button>
+<button data-action="tab" data-tab="supplements">Supplements</button>
+<button data-action="tab" data-tab="timeline">Timeline</button>
+<button data-action="tab" data-tab="coach">Coach</button>
 </nav>
 
 <script>
-const KEY='coach90_v2';
-let data=JSON.parse(localStorage.getItem(KEY)||'{"checkins":[],"workouts":[],"meals":{},"supplements":{}}');
+const KEY='coach90_v3';
+let data;
+try{data=JSON.parse(localStorage.getItem(KEY)||localStorage.getItem('coach90_v2')||'{"checkins":[],"workouts":[],"meals":{},"supplements":{}}')}catch(e){data={checkins:[],workouts:[],meals:{},supplements:{}}}
 if(!data.supplements)data.supplements={};
 if(!data.meals)data.meals={};
 const start=new Date('2026-10-01T00:00:00');
@@ -232,12 +233,12 @@ function clearMeals(){if(confirm('مسح أكل اليوم؟')){data.meals[today
 function renderMealUI(){
  let mb=document.getElementById('mealButtons'); mb.innerHTML='';
  Object.entries(mealDB).forEach(([group,items])=>{
-   mb.insertAdjacentHTML('beforeend',`<div class="mealgroup"><h3>${group}</h3><div class="quickgrid">${items.map(x=>`<button class="quick" onclick="addMeal('${x[0].replace(/'/g,"\\'")}',${x[1]},${x[2]})"><b>${x[0]}</b><small>${x[1]} kcal · ${x[2]}g protein</small></button>`).join('')}</div></div>`)
+   mb.insertAdjacentHTML('beforeend',`<div class="mealgroup"><h3>${group}</h3><div class="quickgrid">${items.map(x=>`<button class="quick" data-action="meal" data-name="${x[0].replace(/\"/g,'&quot;')}" data-cal="${x[1]}" data-pro="${x[2]}"><b>${x[0]}</b><small>${x[1]} kcal · ${x[2]}g protein</small></button>`).join('')}</div></div>`)
  });
- document.getElementById('drinkButtons').innerHTML=drinks.map(x=>`<button class="quick" onclick="addMeal('${x[0]}',${x[1]},${x[2]})"><b>${x[0]}</b><small>${x[1]} kcal · ${x[2]}g protein</small></button>`).join('');
+ document.getElementById('drinkButtons').innerHTML=drinks.map(x=>`<button class="quick" data-action="meal" data-name="${x[0].replace(/\"/g,'&quot;')}" data-cal="${x[1]}" data-pro="${x[2]}"><b>${x[0]}</b><small>${x[1]} kcal · ${x[2]}g protein</small></button>`).join('');
  let m=todayMeals(),cal=m.reduce((s,x)=>s+x.cal,0),pro=m.reduce((s,x)=>s+x.pro,0);
  mealCal.textContent=cal;mealPro.textContent=pro+'g';
- mealLog.innerHTML=m.map((x,i)=>`<div class="log"><button class="remove" onclick="removeMeal(${i})">×</button><b>${x.name}</b> · ${x.cal} kcal · ${x.pro}g protein</div>`).join('')||'<p class="mini">لسه مفيش أكل متسجل.</p>';
+ mealLog.innerHTML=m.map((x,i)=>`<div class="log"><button class="remove" data-action="removeMeal" data-index="${i}">×</button><b>${x.name}</b> · ${x.cal} kcal · ${x.pro}g protein</div>`).join('')||'<p class="mini">لسه مفيش أكل متسجل.</p>';
 }
 function saveCheckin(){
  let m=todayMeals(),cal=m.reduce((s,x)=>s+x.cal,0),pro=m.reduce((s,x)=>s+x.pro,0);
@@ -359,10 +360,25 @@ const workoutMsg=document.getElementById('workoutMsg');
 const coachStatus=document.getElementById('coachStatus');
 const timelineStats=document.getElementById('timelineStats');
 const timelineList=document.getElementById('timelineList');
+document.addEventListener('click',function(e){
+ const el=e.target.closest('[data-action]'); if(!el)return;
+ const a=el.dataset.action;
+ try{
+  if(a==='tab'){document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));document.getElementById(el.dataset.tab).classList.add('active');document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));el.classList.add('active');}
+  else if(a==='clearMeals')clearMeals();
+  else if(a==='saveCheckin')saveCheckin();
+  else if(a==='saveWorkout')saveWorkout();
+  else if(a==='exportData')exportData();
+  else if(a==='openImport')document.getElementById('importFile').click();
+  else if(a==='supp')toggleSupp(el.dataset.name);
+  else if(a==='meal')addMeal(el.dataset.name,+el.dataset.cal,+el.dataset.pro);
+  else if(a==='removeMeal')removeMeal(+el.dataset.index);
+ }catch(err){console.error('Coach action error:',err);}
+});
 workoutDay.addEventListener('change',renderExercises);
 renderExercises();
 render();
 </script>
-<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=3",{updateViaCache:"none"}).catch(()=>{}));}</script>
 </body>
 </html>
