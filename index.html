@@ -94,6 +94,19 @@
       <div class="field"><label>اختار التمرينة</label><select id="workoutDay"><option>Upper A</option><option>Lower A</option><option>Upper B</option><option>Lower B</option></select></div>
       <div id="coachTip" class="pill">ابدأ بوزن يسمح لك بـ RIR 2 تقريبًا</div>
       <div id="exercises"></div>
+
+      <div class="card" style="margin:12px 0 0;background:#f8fafc">
+        <h2>❤️ الكارديو</h2>
+        <p class="mini" id="cardioPlan">بعد الحديد: اختر المشاية أو العجلة وسجل المدة.</p>
+        <div class="row">
+          <div class="field"><label>الجهاز</label><select id="cardioType"><option value="treadmill">🚶 المشاية</option><option value="bike">🚴 العجلة</option></select></div>
+          <div class="field"><label>المدة (دقيقة)</label><input id="cardioMinutes" type="number" min="0" step="1" placeholder="15"></div>
+          <div class="field"><label id="cardioIntensityLabel">السرعة (كم/س)</label><input id="cardioIntensity" type="number" min="0" step="0.1" placeholder="5.0"></div>
+          <div class="field"><label>المسافة (كم) — اختياري</label><input id="cardioDistance" type="number" min="0" step="0.1" placeholder="—"></div>
+        </div>
+        <p class="mini" id="cardioNote">المشاية: ابدأ تقريبًا 4.5–5.5 كم/س وميل 0–3%. لا جري حاليًا.</p>
+      </div>
+
       <button class="btn" data-action="saveWorkout">حفظ التمرين بالكامل</button>
       <p id="workoutMsg" class="success"></p>
     </div>
@@ -263,9 +276,21 @@ function renderExercises(){
  let last=data.workouts.filter(x=>x.day===workoutDay.value).at(-1);
  progressionAdvice.textContent=last?'في المرة القادمة: لو وصلت للحد الأعلى من الـreps بكل المجموعات مع فورم سليم وRIR≈2، زوّد أصغر وزن متاح.':'بعد أول تسجيل هنبدأ بناء سجل الـprogression.';
 }
+function cardioPlanFor(day){
+ if(day==='Upper A')return {type:'treadmill',minutes:15,max:20,text:'بعد Upper A: مشاية 15–20 دقيقة، سرعة مبدئية 4.5–5.5 كم/س، ميل 0–3%.'};
+ if(day==='Lower A')return {type:'bike',minutes:10,max:15,text:'بعد Lower A: عجلة 10–15 دقيقة، مقاومة خفيفة إلى متوسطة.'};
+ if(day==='Upper B')return {type:'treadmill',minutes:15,max:20,text:'بعد Upper B: مشاية 15–20 دقيقة، سرعة مبدئية 4.5–5.5 كم/س، ميل 0–3%.'};
+ return {type:'bike',minutes:10,max:15,text:'بعد Lower B: عجلة 10–15 دقيقة، مقاومة خفيفة إلى متوسطة.'};
+}
+function renderCardioPlan(){
+ let p=cardioPlanFor(workoutDay.value); cardioType.value=p.type; cardioMinutes.placeholder=p.minutes; cardioPlan.textContent=p.text;
+ if(p.type==='treadmill'){cardioIntensityLabel.textContent='السرعة (كم/س)';cardioIntensity.placeholder='5.0';cardioNote.textContent='المشاية: ابدأ تقريبًا 4.5–5.5 كم/س وميل 0–3%. لا جري حاليًا.';}
+ else{cardioIntensityLabel.textContent='المقاومة / المستوى';cardioIntensity.placeholder='خفيف–متوسط';cardioNote.textContent='العجلة: 10–15 دقيقة، مقاومة خفيفة إلى متوسطة، بدون ضغط قوي على الركبة.';}
+}
 function saveWorkout(){
  let day=workoutDay.value,arr=[];exercises[day].forEach((e,i)=>arr.push({exercise:e,sets:document.getElementById('sets'+i).value,load:document.getElementById('load'+i).value}));
- data.workouts.push({date:new Date().toISOString(),day,exercises:arr});save();workoutMsg.textContent='تم حفظ التمرين بالكامل ✅';renderExercises();
+ let cardio={type:cardioType.value,minutes:+cardioMinutes.value||0,intensity:cardioIntensity.value||'',distance:+cardioDistance.value||null};
+ data.workouts.push({date:new Date().toISOString(),day,exercises:arr,cardio});save();workoutMsg.textContent='تم حفظ الحديد + الكارديو بالكامل ✅';renderExercises();renderCardioPlan();
 }
 function exportData(){data.exportedAt=new Date().toISOString();data.appVersion='coach90_v3';let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='coach90-data.json';a.click()}
 function importData(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{data=JSON.parse(r.result);save();alert('تم استيراد البيانات ✅')}catch{alert('الملف غير صالح')}};r.readAsText(f)}
@@ -316,7 +341,8 @@ function renderTimeline(){
    return `<div class="timelineItem"><b>${d}</b><br>
    ${c?`⚖️ ${c.weight??'—'}kg · 🔥 ${(c.calories ?? mc) ?? '—'} kcal · 🥩 ${(c.protein ?? mp) ?? '—'}g`:''}
    ${m.length?`<br>🍽️ ${m.length} items · ${mc} kcal`:''}
-   ${w.length?`<br>🏋️ ${w.map(x=>x.day).join(', ')}`:''}</div>`;
+   ${w.length?`<br>🏋️ ${w.map(x=>x.day).join(', ')}`:''}
+   ${w.some(x=>x.cardio?.minutes)?`<br>❤️ ${w.filter(x=>x.cardio?.minutes).map(x=>x.cardio.type==='treadmill'?'مشاية':'عجلة').join(' + ')} · ${w.filter(x=>x.cardio?.minutes).reduce((s,x)=>s+(x.cardio.minutes||0),0)} دقيقة`:''}</div>`;
  }).join('')||'<p class="mini">لم يبدأ السجل بعد.</p>';
 }
 function render(){
@@ -357,6 +383,13 @@ const workoutDay=document.getElementById('workoutDay');
 const exercisesEl=document.getElementById('exercises');
 const progressionAdvice=document.getElementById('progressionAdvice');
 const workoutMsg=document.getElementById('workoutMsg');
+const cardioType=document.getElementById('cardioType');
+const cardioMinutes=document.getElementById('cardioMinutes');
+const cardioIntensity=document.getElementById('cardioIntensity');
+const cardioDistance=document.getElementById('cardioDistance');
+const cardioPlan=document.getElementById('cardioPlan');
+const cardioIntensityLabel=document.getElementById('cardioIntensityLabel');
+const cardioNote=document.getElementById('cardioNote');
 const coachStatus=document.getElementById('coachStatus');
 const timelineStats=document.getElementById('timelineStats');
 const timelineList=document.getElementById('timelineList');
@@ -375,10 +408,12 @@ document.addEventListener('click',function(e){
   else if(a==='removeMeal')removeMeal(+el.dataset.index);
  }catch(err){console.error('Coach action error:',err);}
 });
-workoutDay.addEventListener('change',renderExercises);
+workoutDay.addEventListener('change',()=>{renderExercises();renderCardioPlan();});
+cardioType.addEventListener('change',renderCardioPlan);
 renderExercises();
+renderCardioPlan();
 render();
 </script>
-<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=3",{updateViaCache:"none"}).catch(()=>{}));}</script>
+<script>if("serviceWorker" in navigator){window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js?v=4",{updateViaCache:"none"}).catch(()=>{}));}</script>
 </body>
 </html>
